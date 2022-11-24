@@ -3,35 +3,37 @@ import { Todo } from "./models/Todo";
 
 let todos: Todo[] = JSON.parse(localStorage.getItem("todos") || "[]");
 
-document.getElementById("clearTodos")?.addEventListener("click", () => {
-  clearTodos(todos);
-});
+export function init() {
+  document.getElementById("clearTodos")?.addEventListener("click", () => {
+    exports.clearTodos(todos);
+  });
 
-(document.getElementById("newTodoForm") as HTMLFormElement)?.addEventListener(
-  "submit",
-  (e: SubmitEvent) => {
-    e.preventDefault();
+  (document.getElementById("newTodoForm") as HTMLFormElement)?.addEventListener(
+    "submit",
+    (e: SubmitEvent) => {
+      e.preventDefault();
 
-    let todoText: string = (
-      document.getElementById("newTodoText") as HTMLInputElement
-    ).value;
-    console.log("Todos when creating", todos);
+      let todoText: string = (
+        document.getElementById("newTodoText") as HTMLInputElement
+      ).value;
+      console.log("Todos when creating", todos);
 
-    createNewTodo(todoText, todos);
-  }
-);
+      createNewTodo(todoText, todos);
+    }
+  );
+}
 
-function createNewTodo(todoText: string, todos: Todo[]) {
+export function createNewTodo(todoText: string, todos: Todo[]) {
   let result = addTodo(todoText, todos);
 
   if (result.success) {
-    createHtml(todos);
+    exports.createHtml(todos);
   } else {
-    displayError(result.error, true);
+    exports.displayError(result.error, true);
   }
 }
 
-function createHtml(todos: Todo[]) {
+export function createHtml(todos: Todo[]) {
   localStorage.setItem("todos", JSON.stringify(todos));
 
   let todosContainer: HTMLUListElement = document.getElementById(
@@ -62,7 +64,7 @@ function toggleTodo(todo: Todo) {
   createHtml(todos);
 }
 
-function displayError(error: string, show: boolean) {
+export function displayError(error: string, show: boolean) {
   let errorContainer: HTMLDivElement = document.getElementById(
     "error"
   ) as HTMLDivElement;
@@ -76,9 +78,11 @@ function displayError(error: string, show: boolean) {
   }
 }
 
-function clearTodos(todos: Todo[]) {
+export function clearTodos(todos: Todo[]) {
   removeAllTodos(todos);
   createHtml(todos);
 }
 
-createHtml(todos);
+init();
+//createHtml(todos);
+//Kommenterar bort för annars körs den varje test.
