@@ -18,7 +18,7 @@ export function init() {
       ).value;
       console.log("Todos when creating", todos);
 
-      createNewTodo(todoText, todos);
+      exports.createNewTodo(todoText, todos);
     }
   );
 }
@@ -59,7 +59,7 @@ export function createHtml(todos: Todo[]) {
   }
 }
 
-function toggleTodo(todo: Todo) {
+export function toggleTodo(todo: Todo) {
   changeTodo(todo);
   createHtml(todos);
 }

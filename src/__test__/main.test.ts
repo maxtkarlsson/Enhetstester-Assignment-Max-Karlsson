@@ -22,25 +22,56 @@ describe("clearTodos", () => {
   });
 });
 
-/* describe("newTodoForm", () => {
-  test("should give input from HTML form element", () => {
+describe("displayError", () => {
+  test("should add html to div", () => {
     //Arrange
-    let spy = jest.spyOn(functions, "createNewTodo").mockReturnValue();
-    document.body.innerHTML = `
-    <form id="newTodoForm">
-    </form>
-    `;
-    functions.init();
+    document.body.innerHTML = `<div id="error" class="error"></div>`;
+
+    let text: string = "Error";
+    let show: boolean = true;
+
     //Act
-    document.getElementById("newTodoForm")?.onsubmit;
+    functions.displayError(text, show);
 
     //Assert
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect((document.getElementById("error") as HTMLDivElement).innerHTML).toBe(
+      "Error"
+    );
   });
-}); */
+
+  test("should add class to classlist", () => {
+    //Arrange
+    document.body.innerHTML = `<div id="error"></div>`;
+    let div = document.getElementById("error") as HTMLDivElement;
+
+    let text: string = "Error";
+    let show: boolean = true;
+
+    //Act
+    functions.displayError(text, show);
+
+    //Assert
+    expect(div.classList.length).toBe(1);
+  });
+
+  test("should remove class from classlist", () => {
+    //Arrange
+    document.body.innerHTML = `<div id="error" class="show"></div>`;
+    let div = document.getElementById("error") as HTMLDivElement;
+
+    let text: string = "Error";
+    let show: boolean = false;
+
+    //Act
+    functions.displayError(text, show);
+
+    //Assert
+    expect(div.classList.length).toBe(0);
+  });
+});
 
 describe("createNewTodo", () => {
-  test("should create html with new todo", () => {
+  test("should create new todo", () => {
     //Arrange
     let spy = jest.spyOn(functions, "createHtml").mockReturnValue();
     let text: string = "test";
@@ -52,7 +83,7 @@ describe("createNewTodo", () => {
     expect(spy).toBeCalledTimes(1);
   });
 
-  test("should NOT create html with new todo", () => {
+  test("should NOT new todo", () => {
     //Arrange
     let spy = jest.spyOn(functions, "displayError").mockReturnValue();
     let text: string = "te";
@@ -62,5 +93,24 @@ describe("createNewTodo", () => {
     functions.createNewTodo(text, list);
     //Assert
     expect(spy).toBeCalledTimes(1);
+  });
+});
+
+describe("newTodoForm", () => {
+  test("should give input from HTML form element", () => {
+    //Arrange
+    let spy = jest.spyOn(functions, "createNewTodo").mockReturnValue();
+    document.body.innerHTML = `
+    <form id="newTodoForm">
+      <input type="text" id="newTodoText" />
+      <button>Skapa</button>
+    </form>
+    `;
+    functions.init();
+    //Act
+    document.querySelector("button")?.click();
+
+    //Assert
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });
