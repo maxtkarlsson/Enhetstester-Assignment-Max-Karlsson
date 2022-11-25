@@ -1,5 +1,6 @@
 import { addTodo, changeTodo, removeAllTodos } from "../ts/functions";
 import { Todo } from "../ts/models/Todo";
+import * as functions from "./../ts/main";
 
 describe("changeTodo", () => {
   test("should toggle done: false/true", () => {

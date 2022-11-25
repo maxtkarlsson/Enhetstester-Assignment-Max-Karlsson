@@ -55,13 +55,13 @@ export function createHtml(todos: Todo[]) {
       toggleTodo(todos[i]);
     });
 
-    todosContainer.appendChild(li);
+    //todosContainer.appendChild(li);
   }
 }
 
 export function toggleTodo(todo: Todo) {
   changeTodo(todo);
-  createHtml(todos);
+  exports.createHtml(todos);
 }
 
 export function displayError(error: string, show: boolean) {
@@ -80,7 +80,7 @@ export function displayError(error: string, show: boolean) {
 
 export function clearTodos(todos: Todo[]) {
   removeAllTodos(todos);
-  createHtml(todos);
+  exports.createHtml(todos);
 }
 
 init();
