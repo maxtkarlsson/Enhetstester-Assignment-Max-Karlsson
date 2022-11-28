@@ -55,7 +55,7 @@ export function createHtml(todos: Todo[]) {
       toggleTodo(todos[i]);
     });
 
-    //todosContainer.appendChild(li);
+    todosContainer.appendChild(li);
   }
 }
 
